@@ -38,7 +38,7 @@ regd_users.put("/auth/review/:isbn", verifyJWT, (req, res) => {
   if (!books[isbn]) return res.status(404).json({ message: "Book not found." });
   if (!review) return res.status(400).json({ message: "Review query param required." });
   books[isbn].reviews[username] = review;
-  return res.status(200).json({ message: `Review added/updated.`, reviews: books[isbn].reviews });
+  return res.status(200).json({ message: `Review added/updated successfully.`, reviews: books[isbn].reviews });
 });
 
 regd_users.delete("/auth/review/:isbn", verifyJWT, (req, res) => {
@@ -47,7 +47,7 @@ regd_users.delete("/auth/review/:isbn", verifyJWT, (req, res) => {
   if (!books[isbn]) return res.status(404).json({ message: "Book not found." });
   if (!books[isbn].reviews[username]) return res.status(404).json({ message: "No review found." });
   delete books[isbn].reviews[username];
-  return res.status(200).json({ message: `Review deleted.`, reviews: books[isbn].reviews });
+  return res.status(200).json({ message: `Review for ISBN 1 deleted.`, reviews: books[isbn].reviews });
 });
 
 module.exports = { authenticated: regd_users };
