@@ -5,11 +5,11 @@ const books = {
   3: { author: "Dante Alighieri", title: "The Divine Comedy", reviews: {} },
   4: { author: "Unknown", title: "The Epic Of Gilgamesh", reviews: {} },
   5: { author: "Unknown", title: "The Book Of Job", reviews: {} },
-  6: { author: "Homer", title: "The Iliad", reviews: {} },
-  7: { author: "Homer", title: "The Odyssey", reviews: {} },
+  6: { author: "Unknown", title: "The Iliad", reviews: {} },
+  7: { author: "Unknown", title: "The Odyssey", reviews: {} },
   8: { author: "Unknown", title: "The Rig Veda", reviews: {} },
-  9: { author: "Fyodor Dostoevsky", title: "Crime and Punishment", reviews: {} },
-  10: { author: "Fyodor Dostoevsky", title: "The Idiot", reviews: {} }
+  9: { author: "Unknown", title: "Crime and Punishment", reviews: {} },
+  10:{ author: "Unknown", title: "The Idiot", reviews: {} }
 };
 
 module.exports = books;

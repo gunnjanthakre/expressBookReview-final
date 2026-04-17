@@ -92,4 +92,8 @@ expressBookReview/
 ## Notes
 - JWT tokens are stored in `express-session` so cookie-based `curl -c / -b` works.
 - Each user can only modify or delete **their own** reviews.
+<<<<<<< Updated upstream
 - `general.js` (root level) uses Async/Await for Task 1 and Promises for Tasks 2–4.
+=======
+- `general.js` (root level) uses Async/Await for Task 1 and Promises for Tasks 2–4.
+>>>>>>> Stashed changes

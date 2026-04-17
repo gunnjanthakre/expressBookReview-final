@@ -1,54 +1,55 @@
 const express = require("express");
-const public_users = express.Router();
-const books = require("../booksdb.js");
+const router = express.Router();
+const books = require("../booksdb");
 
-// ─── Task 1 – Get all books ─────────────────────────────
-public_users.get("/", (req, res) => {
-  return res.status(200).json(books);
+// ------------------- GET ALL BOOKS -------------------
+router.get("/", (req, res) => {
+  res.send(books);
 });
 
-// ─── Task 2 – Get by ISBN ────────────────────────────────
-public_users.get("/isbn/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
-  const book = books[isbn];
-
-  if (book) {
-    return res.status(200).json(book);
-  }
-  return res.status(404).json({ message: "Book not found" });
+// ------------------- GET BY ISBN -------------------
+router.get("/isbn/:isbn", (req, res) => {
+  const book = books[req.params.isbn];
+  res.send(book ? book : { message: "Book not found" });
 });
 
-// ─── Task 3 – Get by Author ──────────────────────────────
-public_users.get("/author/:author", (req, res) => {
-  const author = req.params.author;
-
-  const result = Object.values(books).filter(
-    (b) => b.author.toLowerCase() === author.toLowerCase()
+// ------------------- GET BY AUTHOR -------------------
+router.get("/author/:author", (req, res) => {
+  const result = Object.entries(books).filter(
+    ([key, value]) => value.author === req.params.author
   );
 
-  return res.status(200).json(result);
+  res.send(Object.fromEntries(result));
 });
 
-// ─── Task 4 – Get by Title ───────────────────────────────
-public_users.get("/title/:title", (req, res) => {
-  const title = req.params.title;
-
-  const result = Object.values(books).filter(
-    (b) => b.title.toLowerCase() === title.toLowerCase()
+// ------------------- GET BY TITLE -------------------
+router.get("/title/:title", (req, res) => {
+  const result = Object.entries(books).filter(
+    ([key, value]) => value.title === req.params.title
   );
 
-  return res.status(200).json(result);
+  res.send(Object.fromEntries(result));
 });
 
-// ─── Task 5 – Get Reviews ────────────────────────────────
-public_users.get("/review/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
-  const book = books[isbn];
+// ------------------- REGISTER -------------------
+let users = require("./auth_users.js");
 
-  if (book) {
-    return res.status(200).json(book.reviews);
+router.post("/register", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password required." });
   }
-  return res.status(404).json({ message: "Book not found" });
+
+  if (users.find((user) => user.username === username)) {
+    return res.status(409).json({ message: "User already exists." });
+  }
+
+  users.push({ username, password });
+
+  return res.status(201).json({
+    message: `User '${username}' successfully registered. You can now log in.`,
+  });
 });
 
-module.exports = public_users;
+module.exports = { general: router };
